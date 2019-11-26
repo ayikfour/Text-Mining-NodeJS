@@ -24,7 +24,8 @@ class Preprocessing {
    clean(document = "") {
       return document
          .replace(/\d+/g, "")
-         .replace(/[-,.'":*?%<>{|}&\/\\$()\n\r]/g, "")
+         .replace(/[-,'":*?%<>{|}&\/\\$()\n\r]/g, "")
+         .replace(/[.]/g, " ")
          .replace(/\B\s\B/g, "");
    }
 

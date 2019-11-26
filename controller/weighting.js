@@ -25,9 +25,7 @@ class Weighting {
    }
 
    getQuery(queries = []) {
-      let query = [];
-      query.push(this.getTerm(queries));
-      return query;
+      return Array.from(new Set(queries));
    }
 
    getRawTermWeight(terms = [], documents = []) {

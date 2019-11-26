@@ -1,5 +1,6 @@
 const fs = require("fs");
 const csv = require("csv-parser");
+const Document = require("./controller/document");
 
 function writeTo(filename, documents) {
    fs.writeFileSync(
@@ -52,9 +53,9 @@ function readBulkV2(dir = "", fileslist) {
       files.forEach(file => {
          let isDirectory = fs.statSync(dir + file).isDirectory();
          if (isDirectory) {
-            fileslist = readBulk(dir + file + "/", fileslist);
+            fileslist = readBulkV2(dir + file + "/", fileslist);
          } else {
-            fileslist.push(readTXT(dir + file));
+            fileslist.push(readTXTv2(dir + file));
          }
       });
       return fileslist;
@@ -82,10 +83,24 @@ function readCSV(filepath) {
    }
 }
 
-function readTXT(filepath) {
+function readTXT(filepath = "") {
    try {
       let file = fs.readFileSync(filepath, "utf8");
       return file;
+   } catch (error) {
+      console.log(err.message);
+      return null;
+   }
+}
+
+function readTXTv2(filepath = "") {
+   try {
+      let file = fs.readFileSync(filepath, "utf8");
+      let splitFilePath = filepath.split("/");
+      let name = splitFilePath.pop();
+      let classification = splitFilePath.pop();
+      let document = new Document(name, classification, file);
+      return document;
    } catch (error) {
       console.log(err.message);
       return null;
@@ -96,4 +111,4 @@ function stringify(documents = []) {
    return documents.join("\r\n");
 }
 
-module.exports = { readFrom, writeTo, stringify, readBulk };
+module.exports = { readFrom, writeTo, stringify, readBulk, readBulkV2 };
