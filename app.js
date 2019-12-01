@@ -67,6 +67,7 @@ async function app() {
    let queries_normalized = IR.normalized(queries_weight);
    let cossim = IR.cossim(TFIDF_normalized, queries_normalized);
    let retrieval = IR.rankedRetrieval(cossim);
+   weighting.write();
    log(retrieval);
 
    //Set process end time

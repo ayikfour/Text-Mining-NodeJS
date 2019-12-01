@@ -24,7 +24,7 @@ class Preprocessing {
    clean(document = "") {
       return document
          .replace(/\d+/g, "")
-         .replace(/[-,'":*?%<>{|}&\/\\$()\n\r]/g, "")
+         .replace(/[,'":*?%<>{|}&\/\\$()\n\r]/g, "")
          .replace(/[.]/g, " ")
          .replace(/\B\s\B/g, "");
    }
@@ -40,6 +40,7 @@ class Preprocessing {
       let result = document
          .split(" ")
          .filter(token => token != "")
+         .filter(token => token != "-")
          .filter(token => !token.match(/^[0-9]*$/g));
       return result;
    }

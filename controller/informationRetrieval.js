@@ -54,6 +54,20 @@ class Retrieval {
          .reverse()
          .filter(document => document.similarity > 0);
    }
+
+   distance(cossim = []) {
+      let distances = cossim.map(similarity => 1 - similarity);
+
+      distances = distances.map((distance, index) => {
+         return { document: index, distance };
+      });
+
+      return distances
+         .sort((a, b) => {
+            return b.distance - a.distance;
+         })
+         .reverse();
+   }
 }
 
 module.exports = Retrieval;
